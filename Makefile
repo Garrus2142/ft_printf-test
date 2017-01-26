@@ -6,12 +6,12 @@
 #    By: thugo <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/19 23:08:09 by thugo             #+#    #+#              #
-#    Updated: 2017/01/25 23:50:00 by thugo            ###   ########.fr        #
+#    Updated: 2017/01/26 18:30:46 by thugo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_printf_test
-SRC = src/main.c src/tests_normal.c src/tests_undefined.c
+SRC = src/main.c src/tests_normal.c src/tests_undefined.c src/capture_stdout.c
 INCLUDE_DIR = ./includes
 OBJ = $(SRC:.c=.o)
 
