@@ -6,7 +6,7 @@
 /*   By: thugo <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 21:29:46 by thugo             #+#    #+#             */
-/*   Updated: 2017/01/27 01:26:45 by thugo            ###   ########.fr       */
+/*   Updated: 2017/01/27 01:57:50 by thugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include <signal.h>
 # include <setjmp.h>
 # include "capture_stdout.h"
