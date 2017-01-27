@@ -6,7 +6,7 @@
 /*   By: thugo <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/26 16:55:28 by thugo             #+#    #+#             */
-/*   Updated: 2017/01/26 18:29:09 by thugo            ###   ########.fr       */
+/*   Updated: 2017/01/26 19:51:07 by thugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <fcntl.h>
 #include "capture_stdout.h"
 
 extern int	errno;
 static int	dup_stdout = -1;
 static int	dup_pipe_write;
 static int	pipefd[2];
+
+static void	disable_block_fd(int fd)
+{
+	int	flags;
+
+	flags = fcntl(fd, F_GETFL);
+	fcntl(fd, F_SETFL, flags | O_NONBLOCK);
+}
 
 void	capture_start()
 {
@@ -36,6 +45,7 @@ void	capture_start()
 	dup_stdout = dup(STDOUT_FILENO);
 	close(STDOUT_FILENO);
 	dup_pipe_write = dup(pipefd[PIPE_WRITE]);
+	disable_block_fd(pipefd[PIPE_READ]);
 }
 
 char	*capture_getbuffer(size_t *size)
@@ -43,14 +53,13 @@ char	*capture_getbuffer(size_t *size)
 	char	*fullbuffer;
 	char	*newbuffer;
 	char	buffer[BUFF_SIZE];
-	size_t	sread;
+	long	sread;
 
 	*size = 0;
 	newbuffer = NULL;
 	fullbuffer = NULL;
-	do
+	while ((sread = read(pipefd[PIPE_READ], buffer, BUFF_SIZE)) > 0)
 	{
-		sread = read(pipefd[PIPE_READ], buffer, BUFF_SIZE);
 		if ((newbuffer = (char *)malloc(sizeof(char) * (sread + *size))) == NULL)
 			exit(EXIT_FAILURE);
 		if (*size > 0)
@@ -60,7 +69,7 @@ char	*capture_getbuffer(size_t *size)
 			free(fullbuffer);
 		fullbuffer = newbuffer;
 		*size += sread;
-	} while (sread == BUFF_SIZE);
+	}
 	return (fullbuffer);
 }
 
