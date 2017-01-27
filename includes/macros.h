@@ -6,7 +6,7 @@
 /*   By: thugo <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 21:29:46 by thugo             #+#    #+#             */
-/*   Updated: 2017/01/27 00:56:44 by thugo            ###   ########.fr       */
+/*   Updated: 2017/01/27 01:26:45 by thugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,9 @@ static void		signal_segfault(int signal, siginfo_t *si, void *arg)
 		printf("\033[34m$\nreturn ft_printf:\033[0m %d\n", h_ret1); \
 		printf("\033[34mreturn printf:\033[0m %d\n", h_ret2); \
 		printf("------------------------------------------\n"); \
-	}
+	} \
+	free(h_buffer1); \
+	free(h_buffer2);
 
 # define PRINT_TESTS_RESULT(NAME) \
 	printf("%s=============== Result %s ================\033[0m\n", num_fail > 0 ? "\033[31m" : "\033[32m", NAME); \
