@@ -57,7 +57,7 @@ static void		signal_segfault(int signal, siginfo_t *si, void *arg)
 	h_ret2 = printf(__VA_ARGS__); \
 	h_buffer2 = capture_getbuffer(&h_size2); \
 	capture_end(); \
-	if (h_size1 != h_size2 || memcmp(h_buffer1, h_buffer2, h_size1) != 0) \
+	if (h_size1 != h_size2 || (h_size1 > 0 && h_size2 > 0 && memcmp(h_buffer1, h_buffer2, h_size1) != 0)) \
 		h_diffprint = 1; \
 	if (h_ret1 != h_ret2) \
 		h_diffreturn = 1; \
